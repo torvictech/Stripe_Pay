@@ -107,9 +107,6 @@ session_start();
 					} else {
 						$errors['token'] = 'The order cannot be processed - please make sure you have JavaScript enabled and try again.';
 					}
-	
-					// Set the order amount somehow:
-					$amount = 2000; // $20, in cents
 
 					// Validate other form data!
 
@@ -127,10 +124,10 @@ session_start();
 
 							// Charge the order:
 							$charge = Stripe_Charge::create(array(
-								"amount" => $amount, // amount in cents, again
+								"amount" => $_GET['payment-amount'], // amount in cents
 								"currency" => "usd",
 								"card" => $token,
-								"description" => "vic@flextrac.com"
+								"description" => $_GET['serial-number']
 								)
 							);
 
@@ -185,11 +182,11 @@ session_start();
 				<form action="pay.php" method="POST" id="payment-form">
 					
 					<label>Payment Amount</label>
-					<span class="help-block">Use the following format: 100.00</span>
+					<span class="help-block">Use the following format - eg. 100.00</span>
 					<input type="text" size="4" autocomplete="off" class="payment-amount input-mini"/>
 					
 					<label>CTS Serial Number</label>
-					<span class="help-block">7 digit unique number for your organization (eg. 1010000)</span>
+					<span class="help-block">7 digit unique number for your organization - eg. 1010000</span>
 					<input type="text" size="20" autocomplete="off" class="serial-number input-medium"/>
 
 					<label>Credit Card Number</label>
@@ -209,15 +206,17 @@ session_start();
 
 					<button type="submit" class="btn" id="submitBtn">Submit Payment</button>
 
-					<div id="payment-errors"></div>
-					<?php // Show PHP errors, if they exist:
-					if (isset($errors) && !empty($errors) && is_array($errors)) {
-						echo '<div class="alert alert-error"><h4>Error!</h4>The following error(s) occurred:<ul>';
-						foreach ($errors as $e) {
-							echo "<li>$e</li>";
-						}
-						echo '</ul></div>';	
-					}?>
+					<span style="color:#D72828">
+						<div id="payment-errors"></div>
+						<?php // Show PHP errors, if they exist:
+						if (isset($errors) && !empty($errors) && is_array($errors)) {
+							echo '<div class="alert alert-error"><h4>Error!</h4>The following error(s) occurred:<ul>';
+							foreach ($errors as $e) {
+								echo "<li>$e</li>";
+							}
+							echo '</ul></div>';	
+						}?>
+					</span>
 
 				</form>
 				<script src="pay.js"></script>

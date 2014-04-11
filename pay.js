@@ -71,11 +71,9 @@ $(document).ready(function() {
 		
 		// Check for errors:
 		if (!error) {
-			
+
 			// Get the Stripe token:
 		    Stripe.createToken({
-		        //amount: pAmount,
-			    //description: snCTS,
 			    number: ccNum,
 				cvc: cvcNum,
 				exp_month: expMonth,

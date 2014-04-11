@@ -124,7 +124,7 @@ session_start();
 
 							// Charge the order:
 							$charge = Stripe_Charge::create(array(
-								"amount" => str_replace(".","",$_POST['pa']), // amount in cents
+								"amount" => (int)str_replace(".","",$_POST['pa']), // amount in cents
 								"currency" => "usd",
 								"card" => $token,
 								"description" => $_POST['sn']

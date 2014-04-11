@@ -124,10 +124,10 @@ session_start();
 
 							// Charge the order:
 							$charge = Stripe_Charge::create(array(
-								"amount" => $_GET['pa'], // amount in cents
+								"amount" => $_POST['pa'], // amount in cents
 								"currency" => "usd",
 								"card" => $token,
-								"description" => $_GET['sn']
+								"description" => $_POST['sn']
 								)
 							);
 
@@ -190,7 +190,7 @@ session_start();
 					<input type="text" size="20" autocomplete="off" class="serial-number input-medium" name="sn"/>
 
 					<label>Credit Card Number</label>
-					<span class="help-block">Enter the number without spaces or hyphens</span>
+					<span class="help-block">Enter the number without spaces or hyphens - eg. 4242424242424242</span>
 					<input type="text" size="20" autocomplete="off" class="card-number input-medium"/>
 					<label>CVC</label>
 					<input type="text" size="4" autocomplete="off" class="card-cvc input-mini"/>

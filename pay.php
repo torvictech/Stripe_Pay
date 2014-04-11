@@ -135,13 +135,13 @@ session_start();
 							if ($charge->paid == true) {
 				
 								// Send the email to sales@flextrac.com
-								ini_set("SMTP", "smtp.flextrac.com");
-								ini_set("sendmail_from", "no-reply@flextrac.com");
+								// ini_set("SMTP", "smtp.flextrac.com");
+								// ini_set("sendmail_from", "no-reply@flextrac.com");
 
-								$message = "Client $_POST['sn'] has sent payment in the amount of $_POST['pa']";
-								$headers = "From: no-reply@flextrac.com";
+								// $message = "Client $_POST['sn'] has sent payment in the amount of $_POST['pa']";
+								// $headers = "From: no-reply@flextrac.com";
 
-								mail("sales@flextrac.com", "Payment Received From Client", $message, $headers);
+								// mail("sales@flextrac.com", "Payment Received From Client", $message, $headers);
 				
 							} else { // Charge was not paid!	
 								echo '<div class="alert alert-error"><h4>Payment System Error!</h4>Your payment could NOT be processed (i.e., You have not been charged) because the payment system rejected the transaction. You can try again or use another card.</div>';

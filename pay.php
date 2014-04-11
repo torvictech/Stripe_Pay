@@ -124,10 +124,10 @@ session_start();
 
 							// Charge the order:
 							$charge = Stripe_Charge::create(array(
-								"amount" => $_GET['payment-amount'], // amount in cents
+								"amount" => $_GET['pa'], // amount in cents
 								"currency" => "usd",
 								"card" => $token,
-								"description" => $_GET['serial-number']
+								"description" => $_GET['sn']
 								)
 							);
 
@@ -183,11 +183,11 @@ session_start();
 					
 					<label>Payment Amount</label>
 					<span class="help-block">Use the following format - eg. 100.00</span>
-					<input type="text" size="4" autocomplete="off" class="payment-amount input-mini"/>
+					<input type="text" size="4" autocomplete="off" class="payment-amount input-mini" name="pa"/>
 					
 					<label>CTS Serial Number</label>
 					<span class="help-block">7 digit unique number for your organization - eg. 1010000</span>
-					<input type="text" size="20" autocomplete="off" class="serial-number input-medium"/>
+					<input type="text" size="20" autocomplete="off" class="serial-number input-medium" name="sn"/>
 
 					<label>Credit Card Number</label>
 					<span class="help-block">Enter the number without spaces or hyphens</span>

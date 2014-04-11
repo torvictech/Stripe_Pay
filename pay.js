@@ -15,6 +15,11 @@ function reportError(msg) {
 	return false;
 }
 
+function IsNumeric(input) {
+    var RE = /^-{0,1}\d*\.{0,1}\d+$/;
+    return (RE.test(input));
+}
+
 // Assumes jQuery is loaded!
 // Watch for the document to be ready:
 $(document).ready(function() {
@@ -29,24 +34,37 @@ $(document).ready(function() {
 		$('#submitBtn').attr("disabled", "disabled");
 
 		// Get the values:
-		var ccNum = $('.card-number').val(), cvcNum = $('.card-cvc').val(), expMonth = $('.card-expiry-month').val(), expYear = $('.card-expiry-year').val();
+		var pAmount = $('.payment-amount').val(), snCTS = $('.serial-number').val(), ccNum = $('.card-number').val(), cvcNum = $('.card-cvc').val(), expMonth = $('.card-expiry-month').val(), expYear = $('.card-expiry-year').val();
 		
-		// Validate the number:
-		if (!Stripe.validateCardNumber(ccNum)) {
+		// Validate the Expiration date:
+		if (!Stripe.validateExpiry(expMonth, expYear)) {
 			error = true;
-			reportError('The credit card number appears to be invalid.');
+			reportError('The Expiration date appears to be invalid.');
 		}
 
-		// Validate the CVC:
+		// Validate the CVC number:
 		if (!Stripe.validateCVC(cvcNum)) {
 			error = true;
 			reportError('The CVC number appears to be invalid.');
 		}
 		
-		// Validate the expiration:
-		if (!Stripe.validateExpiry(expMonth, expYear)) {
+		// Validate the Credit Card Number:
+		if (!Stripe.validateCardNumber(ccNum)) {
 			error = true;
-			reportError('The expiration date appears to be invalid.');
+			reportError('The Credit Card Number appears to be invalid.');
+		}
+
+	    // Validate CTS Serial Number:
+		if (snCTS.length != 7 || !IsNumeric(snCTS)) {
+		    error = true;
+		    reportError('The CTS Serial Number appears to be invalid.');
+		}
+
+	    // Validate Payment Amount:
+		var regex = /^\d+(?:\.\d{0,2})$/;
+		if (!regex.test(pAmount)) {
+		    error = true;
+		    reportError('The Payment Amount appears to be invalid.');
 		}
 
 		// Validate other form elements, if needed!
@@ -55,8 +73,10 @@ $(document).ready(function() {
 		if (!error) {
 			
 			// Get the Stripe token:
-			Stripe.createToken({
-				number: ccNum,
+		    Stripe.createToken({
+		        //amount: pAmount,
+			    //description: snCTS,
+			    number: ccNum,
 				cvc: cvcNum,
 				exp_month: expMonth,
 				exp_year: expYear

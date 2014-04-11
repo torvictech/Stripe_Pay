@@ -183,18 +183,17 @@ session_start();
 				<hr />
 
 				<form action="pay.php" method="POST" id="payment-form">
+					
+					<label>Payment Amount</label>
+					<span class="help-block">Use the following format: 100.00</span>
+					<input type="text" size="4" autocomplete="off" class="payment-amount input-mini"/>
+					
+					<label>CTS Serial Number</label>
+					<span class="help-block">7 digit unique number for your organization (eg. 1010000)</span>
+					<input type="text" size="20" autocomplete="off" class="serial-number input-medium"/>
 
-					<?php // Show PHP errors, if they exist:
-					if (isset($errors) && !empty($errors) && is_array($errors)) {
-						echo '<div class="alert alert-error"><h4>Error!</h4>The following error(s) occurred:<ul>';
-						foreach ($errors as $e) {
-							echo "<li>$e</li>";
-						}
-						echo '</ul></div>';	
-					}?>
-
-					<label>Card Number</label>
-					<span class="help-block">Enter the number without spaces or hyphens.</span>
+					<label>Credit Card Number</label>
+					<span class="help-block">Enter the number without spaces or hyphens</span>
 					<input type="text" size="20" autocomplete="off" class="card-number input-medium"/>
 					<label>CVC</label>
 					<input type="text" size="4" autocomplete="off" class="card-cvc input-mini"/>
@@ -211,6 +210,14 @@ session_start();
 					<button type="submit" class="btn" id="submitBtn">Submit Payment</button>
 
 					<div id="payment-errors"></div>
+					<?php // Show PHP errors, if they exist:
+					if (isset($errors) && !empty($errors) && is_array($errors)) {
+						echo '<div class="alert alert-error"><h4>Error!</h4>The following error(s) occurred:<ul>';
+						foreach ($errors as $e) {
+							echo "<li>$e</li>";
+						}
+						echo '</ul></div>';	
+					}?>
 
 				</form>
 				<script src="pay.js"></script>
